@@ -6,14 +6,14 @@ const TODO = "REPLACE ME!!!";
  * @param {string} sentence - a space-separated string of words
  * @returns {boolean} whether `sentence` contains any of the words in `topics`
  */
-const isRelevant = TODO;
+const isRelevant = (topics, sentence) => topics.some((topic) => sentence.includes(topic));
 
 /**
  * @param {string[]} topics - an array of topic words
  * @returns {(sentence: string) => boolean} a function that takes a sentence
  *  and returns whether it is relevant to `topics`
  */
-const about = TODO;
+const about = (topics) => (sentence) => isRelevant(topics, sentence);
 
 /**
  * @param {(sentence: string) => boolean} criterion - a function that
@@ -21,14 +21,14 @@ const about = TODO;
  * @param {string[]} sentences - an array of space-separated strings of words
  * @returns {string[]} the subset of `sentences` for which `criterion` returns true
  */
-const getRelevantSentences = TODO;
+const getRelevantSentences = (criterion, sentences) => sentences.filter(criterion);
 
 /**
  * @param {string} str1 - the first string to compare
  * @param {string} str2 - the second string to compare
  * @returns {number} the absolute difference in length between `str1` and `str2`
  */
-const getDistanceByLength = TODO;
+const getDistanceByLength = (str1, str2) => Math.abs(str1.length - str2.length);
 
 /**
  * @param {string} word - the original string
@@ -40,7 +40,11 @@ const getDistanceByLength = TODO;
  *  as calculated by `distanceFn`, unless that distance is strictly greater than
  *  the `threshold`, in which case the original `word` is returned.
  */
-const getClosestWord = TODO;
+const getClosestWord = (word, words, distanceFn, threshold) => {
+  const distances = words.map((w) => distanceFn(word, w));
+  const minDistance = Math.min(...distances);
+  return minDistance <= threshold ? words[distances.indexOf(minDistance)] : word;
+};
 
 /**
  * @param {string} word - the original string
@@ -50,7 +54,9 @@ const getClosestWord = TODO;
  *  unless that distance is strictly greater than the `threshold`,
  *  in which case the original `word` is returned.
  */
-const getClosestWordByLength = TODO;
+const getClosestWordByLength = (word, words, threshold) =>
+  getClosestWord(word, words, getDistanceByLength, threshold);
+
 
 /* === Simple Test Cases === */
 // The provided logs print the expected output first.
